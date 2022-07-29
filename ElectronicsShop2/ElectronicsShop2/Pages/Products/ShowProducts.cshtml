@@ -1,0 +1,119 @@
+﻿@page
+@using System.Globalization
+@model ElectronicsShop2.Pages.Products.ShowProductsModel
+@{
+
+}
+
+<br>
+<h2>List OF Products</h2>
+
+<div class="card-columns">
+
+   
+    @foreach (var item in Model.ListProducts)
+    {
+
+        <div class="card">
+            <img class="card-img-top" src="SamTv.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h1>@item.name</h1>
+                @* @item.id*@
+                
+                @if (item.discount != "0")
+                {
+                    <label>Old Price</label>
+                   
+                    <h3 style="color: black"; > @item.price</h3> <h4>discount:@item.discount%</h4> 
+
+                    var discount = float.Parse(item.discount, CultureInfo.InvariantCulture.NumberFormat);
+                    var price = float.Parse(item.price, CultureInfo.InvariantCulture.NumberFormat);
+                    var newprice = price-(price * (discount / 100));
+                    <label>New Price</label>
+                    <h2 style="color: red"; >@newprice</h2>
+
+                }
+                else
+                {
+                    <label>Price</label>
+                    <h2 style="color: #000000"; >@item.price</h2>
+                    
+                }
+                   
+                <h4 style="color: rgb(0, 90, 202)"; > @item.description</h4>
+                @if (@item.type == "1")
+                {
+                    <h2 style="color: rgb(0, 255, 55)"; >TV</h2>
+                }else if (@item.type == "2")
+                {
+                    <h2 style="color: rgb(0, 255, 55)"; >Laptop</h2>
+                }
+                else
+                {
+                    <h2 style="color: rgb(0, 255, 55)"; >Sound System</h2>
+                }
+              
+                @*@item.quantity
+                @item.created_at*@
+                <a class="btn btn-primary btn-sm" href="/Products/Order?id=@item.id">Order</a>
+            </div>
+        </div>
+        <br/>
+       
+
+         
+        
+
+        
+    }
+
+</div>
+<span id ="spanMsg">gggg</span>
+@section Scripts
+{
+    <script>
+        $(document).ready(function() {
+
+            $.ajax({
+                type:"GET",
+                url: "@Url.Action("GetNames")",
+                dataType:"json",
+                success:function(result){
+                    console.log(result);
+                },
+                error: function(req, status, error) {
+                    console.log(status);
+                }
+            });
+            val1 = 5;
+            val2 = 2;
+            $.ajax({
+                type:"POST",
+                url: "@Url.Action("Add")",
+                data:{number1: val1, number2:val2},
+                dataType:"text",
+                success:function(result) {
+                    document.getElementById("spanMsg").textContent = result;
+                },
+                error: function(req, status, error) {
+                    document.getElementById("spanMsg").textContent = "Not Working";
+                }
+            });
+
+
+            $.ajax({
+                type:"POST",
+                url: "@Url.Action("PostName")",
+                dataType:"json",
+                data: {type: "Jan nick"},
+                success:function(result){
+                    console.log(result);
+                },
+                error: function(req, status, error) {
+                    console.log(status);
+                }
+            });
+        })
+       
+    </script>
+}

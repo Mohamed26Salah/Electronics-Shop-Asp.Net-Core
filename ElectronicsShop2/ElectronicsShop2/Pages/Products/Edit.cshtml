@@ -1,0 +1,111 @@
+﻿@page
+@model ElectronicsShop2.Pages.Products.EditModel
+@{
+}
+<br>
+<h2>Edit Product</h2>
+@if (Model.errorMessage.Length > 0)
+{
+    <div class='alert alert-warning alert-dismissble fade show' role='alert'>
+        <strong>@Model.errorMessage</strong>
+        <button tybe='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>
+}
+<form method=POST>
+    <input type="hidden" name="id" value="@Model.productInfo.id" >
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Name</label>
+        <div calss="col-sm-6">
+            <input type="text" class="form-control" name="name" value="@Model.productInfo.name">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Price</label>
+        <div calss="col-sm-6">
+            <input type="number" class="form-control" name="price" value="@Model.productInfo.price" min="0">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Discount</label>
+        <div calss="col-sm-6">
+            <select class="form-control" name="discount" >
+                @if(Model.productInfo.discount == "0"){
+                    <option value=''>Choose</option>
+                    <option selected  value='0'>0%</option>
+                    <option value='10'>10%</option>
+                    <option value='20'>20%</option>
+                }else if(Model.productInfo.discount == "10"){
+                    <option value=''>Choose</option>
+                    <option value='0'>0%</option>
+                    <option selected value='10'>10%</option>
+                    <option value='20'>20%</option>
+                }
+                else
+                {
+                    <option value=''>Choose</option>
+                    <option value='0'>0%</option>
+                    <option value='10'>10%</option>
+                    <option selected value='20'>20%</option>
+                }
+            </select>
+        </div> 
+    </div> 
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Quantity</label>
+        <div calss="col-sm-6">
+            <input type="number" class="form-control" name="quantity" value="@Model.productInfo.quantity" min="0">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Description</label>
+        <div calss="col-sm-6">
+            <input type="text" class="form-control" name="description" value="@Model.productInfo.description" maxlength="255">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Type</label>
+        <div calss="col-sm-6">
+            <select class="form-control" name="type" >
+                @if(Model.productInfo.type == "1"){
+                    <option value=''>Choose</option>
+                    <option selected  value='1'>TV</option>
+                    <option value='2'>Laptop</option>
+                    <option value='3'>Sound System</option>
+                }else if(Model.productInfo.type == "2"){
+                    <option value=''>Choose</option>
+                    <option value='1'>TV</option>
+                    <option selected value='2'>Laptop</option>
+                    <option value='3'>Sound System</option>
+                }
+                else
+                {
+                    <option value=''>Choose</option>
+                    <option value='1'>TV</option>
+                    <option value='2'>Laptop</option>
+                    <option selected value='3'>Sound System</option>
+                }
+            </select>
+        </div> 
+    </div> 
+    @if (Model.successMessage.Length > 0)
+    {
+        <div calss="row mb-3">
+            <div class="col-sm-9">
+                <div class='alert alert-success alert-dismissble fade show' role='alert'>
+                    <strong>@Model.successMessage</strong>
+                    <button tybe='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                </div>
+
+            </div>
+        </div>
+
+    }
+    <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary">submit</button>
+        </div>
+        <div calss="col-sm-3 d-grid">
+            <a class="btn btn-outline-primary" href="/" role="button">Cancel</a>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,108 @@
+﻿@page
+@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ElectronicsShop2.Pages.Products.OrderModel
+@{
+    Model.OnGet();
+}
+
+<br>
+<h2>Order</h2>
+<div class="card">
+    <img class="card-img-top" src="SamTv.jpg" alt="Card image cap">
+    <div class="card-body">
+        <h1>@Model.productInfo.name</h1>
+        @* @item.id*@
+        @if (Model.productInfo.discount != "0")
+        {
+            <label>Old Price</label>
+            
+            <h3 style="color: black"; > @Model.productInfo.price</h3> <h4>discount:@Model.productInfo.discount%</h4> 
+            <h4>@Model.productInfo.discount</h4>
+            var discount = float.Parse(Model.productInfo.discount, CultureInfo.InvariantCulture.NumberFormat);
+            var price = float.Parse(Model.productInfo.price, CultureInfo.InvariantCulture.NumberFormat);
+            var newprice = price-(price * (discount / 100));
+            <label>New Price</label>
+            <h2 style="color: red"; >@newprice</h2>
+           
+
+        }
+        else
+        {
+            <label>Price</label>
+            <h2 style="color: #000000"; >@Model.productInfo.price</h2>
+                    
+        }
+        <h4 style="color: rgb(0, 90, 202)"; > @Model.productInfo.description</h4>
+        @if (Model.productInfo.type == "1")
+        {
+            <h2 style="color: rgb(0, 255, 55)"; >TV</h2>
+        }else if (Model.productInfo.type == "2")
+        {
+            <h2 style="color: rgb(0, 255, 55)"; >Laptop</h2>
+        }
+        else
+        {
+            <h2 style="color: rgb(0, 255, 55)"; >Sound System</h2>
+        }
+              
+        <h3>quantity @Model.productInfo.quantity</h3>
+        
+        
+    </div>
+</div>
+<br/>
+@if (Model.errorMessage.Length > 0)
+{
+    <div class='alert alert-warning alert-dismissble fade show' role='alert'>
+        <strong>@Model.errorMessage</strong>
+        <button tybe='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>
+}
+<form method=POST>
+    <input type="hidden" name="id" value="@Model.productInfo.id" >
+    <input type="hidden" name="price" value="@Model.productInfo.price" >
+    <input type="hidden" name="discount" value="@Model.productInfo.discount" >
+    
+    <div class="row mb-3">
+        <h4>IF you Bought more than one item, you will take a 15% discount.</h4>
+        <label class="col-sm-3 col-form-label">Quantity</label>
+        <div calss="col-sm-6">
+            <input type="number" class="form-control" name="quantity" value="1" min="1">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Your Address</label>
+        <div calss="col-sm-6">
+            <input type="text" class="form-control" name="address" value="" >
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">your phone number</label>
+        <div calss="col-sm-6">
+            <input type="number" class="form-control" name="phoneNumber" value="">
+        </div>
+    </div>
+    <h2>Your Order will take 2 days from today</h2>
+    @if (Model.successMessage.Length > 0)
+    {
+        <div calss="row mb-3">
+            <div class="col-sm-9">
+                <div class='alert alert-success alert-dismissble fade show' role='alert'>
+                    <strong>@Model.successMessage</strong>
+                    <button tybe='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                </div>
+
+            </div>
+        </div>
+
+    }
+    <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary">submit</button>
+        </div>
+        <div calss="col-sm-3 d-grid">
+            <a class="btn btn-outline-primary" href="/Products/ShowProducts" role="button">Cancel</a>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,61 @@
+﻿@page
+@model ElectronicsShop2.Pages.Products.Index1Model
+@{
+}
+<br>
+<h2>List OF Products</h2>
+<a class='btn btn-primary btn-sm' href='/Products/Create'>New Product</a>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Discount</th>
+        <th>Quantity</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Created At</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    @*@if (Model.ListProducts.Count <= 0)
+    {
+        <h1>@Model.ListProducts.Count</h1>
+    }
+    else
+    {
+        <h1>Not Fady</h1>
+    }*@
+    @foreach (var item in Model.ListProducts)
+    {
+        <tr>
+
+            <td>@item.id</td>
+            <td>@item.name</td>
+            <td>@item.price</td>
+            <td>@item.discount%</td>
+            <td>@item.quantity</td>
+            <td>@item.description</td>
+            @if (@item.type == "1")
+            {
+                <td>TV</td>
+            }else if (@item.type == "2")
+            {
+                <td>Laptop</td>
+            }
+            else
+            {
+                <td>Sound System</td>
+            }
+            <td>@item.created_at</td>
+            <td>
+                <a class="btn btn-primary btn-sm" href="/Products/Edit?id=@item.id">Edit</a>
+                <a class="btn btn-danger btn-sm" href="/Products/Delete?id=@item.id">Delete</a>
+            </td>
+
+        </tr>
+    }
+    </tbody>
+</table>
