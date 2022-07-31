@@ -1,16 +1,17 @@
 ﻿@page
 @using System.Globalization
+@Html.AntiForgeryToken()
 @model ElectronicsShop2.Pages.Products.ShowProductsModel
-@{
-
-}
+@*@{
+    Model.OnPostGetAjax("0");
+}*@
 
 <br>
 <h2>List OF Products</h2>
 
 <div class="card-columns">
 
-   
+   <button class="btn btn-primary" onclick="Filter(this)" value = "1">TV</button> <button  onclick="Filter(this)" class="btn btn-danger" value = "2">Laptop</button> <button class="btn btn-dark"  onclick="Filter(this)" value = "3">SoundSystem</button>
     @foreach (var item in Model.ListProducts)
     {
 
@@ -60,60 +61,39 @@
         </div>
         <br/>
        
-
+                                                                                         
          
         
 
         
     }
-
+   
 </div>
-<span id ="spanMsg">gggg</span>
+
+
 @section Scripts
 {
-    <script>
-        $(document).ready(function() {
-
+    
+    <script type="text/javascript">
+        function Filter(input){
             $.ajax({
-                type:"GET",
-                url: "@Url.Action("GetNames")",
-                dataType:"json",
-                success:function(result){
-                    console.log(result);
+                type: "POST",
+                url: "/Products/ShowProducts?handler=GetAjax",
+                data:{"name": input.value},
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: "json",
+                headers:
+                {
+                    "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
                 },
-                error: function(req, status, error) {
-                    console.log(status);
+                success: function (msg) {
+                  
+                    console.log(msg);
+                   
                 }
             });
-            val1 = 5;
-            val2 = 2;
-            $.ajax({
-                type:"POST",
-                url: "@Url.Action("Add")",
-                data:{number1: val1, number2:val2},
-                dataType:"text",
-                success:function(result) {
-                    document.getElementById("spanMsg").textContent = result;
-                },
-                error: function(req, status, error) {
-                    document.getElementById("spanMsg").textContent = "Not Working";
-                }
-            });
-
-
-            $.ajax({
-                type:"POST",
-                url: "@Url.Action("PostName")",
-                dataType:"json",
-                data: {type: "Jan nick"},
-                success:function(result){
-                    console.log(result);
-                },
-                error: function(req, status, error) {
-                    console.log(status);
-                }
-            });
-        })
-       
+        }
+        
     </script>
 }
+

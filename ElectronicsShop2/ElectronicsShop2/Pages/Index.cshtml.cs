@@ -47,5 +47,6 @@ namespace ElectronicsShop2.Pages
                
             }
         }
+      
     }
 }
